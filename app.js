@@ -4,19 +4,17 @@ const app = express();
 const mongoose = require('mongoose');
 const cron = require('node-cron');
 const fetch = require("node-fetch");
+const Pollutionair = require('./models/pollutionair');
 /* Récuperation du token dans les variable d'environement  
 * le fichier d'environement .env doit contenir : 
-* PORT : le port de l'API qui 3000 par defaut
 * PORT = 3000
-* MONGODB_URL = "lien de connexion a votre base de donnée"
+* MONGODB_URL = "lien de connexion à votre base de donnée"
 * APP_KEY="Votre API token "
 */
 const dotenv = require("dotenv");
-
-
+const rateLimit = require('./models/limitrate');
 dotenv.config();
 const path = require('path');
-
 const airqualityRoutes = require('./routes/airquality');
 // Url de la base de donnée 
 const MY_MONGODBURL = process.env.MONGODB_URL;
@@ -32,7 +30,7 @@ mongoose.connect(MY_MONGODBURL,
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 // ajouter les differants plugins à notre application express 
 app.use(express.json());
-//app.use(rateLimit);
+app.use(rateLimit);
 // on configure quelques regle de cross control  
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
@@ -61,8 +59,16 @@ cron.schedule('* * * * *', async () => {
             },
         );
         const jsonData = await data.json();
-        const results = jsonData.data.current.pollution
-        console.log(results);
+        const aqius = jsonData.data.current.pollution.aqius
+        const ts = jsonData.data.current.pollution.ts
+        const pollutionair = new Pollutionair({
+            time: ts,
+            aqi: aqius
+        });
+        pollutionair.save()
+            .then(() => { console.log("pollution air enregistré !"); })
+            .catch((error) => { console.log(error) })
+        console.log(aqius + ts);
     }
     catch (err) {
         console.log(err);
