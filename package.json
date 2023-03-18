@@ -1,0 +1,26 @@
+{
+  "name": "pollution_iqair",
+  "version": "1.0.0",
+  "description": "API pollution avec iqair",
+  "main": "server.ts",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Habibouldmoussa/pollution_iqair.git"
+  },
+  "author": "habib ouldmoussa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Habibouldmoussa/pollution_iqair/issues"
+  },
+  "homepage": "https://github.com/Habibouldmoussa/pollution_iqair#readme",
+  "dependencies": {
+    "Cron": "0.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.2",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^2.6.9",
+    "nodemon": "^2.0.21"
+  }
+}
