@@ -50,7 +50,7 @@ Install dependencies
   npm install
 ```
 
-Creat .env file
+Create .env file
 
 ```bash
 echo -e "PORT=3000 \n APP_KEY='your_secret_key' \n MONGODB_URL='your_url_mongodb_with_auth' " > .env
