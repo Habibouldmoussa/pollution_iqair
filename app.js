@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 });
 // Création des routes 
 app.use('/airquality', airqualityRoutes);
-cron.schedule('* * * * *', async () => {
+cron.schedule('* 10 * * *', async () => {
     const API_KEY = process.env.APP_KEY
     const longit = 2.352222;
     const latit = 48.856613;
